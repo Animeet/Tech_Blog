@@ -15,7 +15,7 @@ BlogPost.init({
     username: {
         type: DataTypes.STRING,
         references: {
-            model: 'userInfo',
+            model: 'users',
             key: 'username'
         }
     },

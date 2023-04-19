@@ -18,8 +18,8 @@ User.init({
     }
 }, {
     sequelize: db,
-    modelName: 'userInfo',
-    timestamps: true
+    modelName: 'user',
+    // timestamps: true
 });
 
 module.exports = User;

@@ -7,7 +7,7 @@ Comment.init({
     blog_id : {
         type: DataTypes.INTEGER,
         references: {
-            model: 'blogPost',
+            model: 'blogPosts',
             key: 'id'
         }
     },
@@ -18,7 +18,7 @@ Comment.init({
     username: {
         type: DataTypes.STRING,
         references: {
-            model: 'userInfo',
+            model: 'users',
             key: 'username'
         }
     },

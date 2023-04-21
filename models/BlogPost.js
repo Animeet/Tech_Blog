@@ -15,7 +15,7 @@ BlogPost.init({
     username: {
         type: DataTypes.STRING,
         references: {
-            model: 'users',
+            model: 'user',
             key: 'username'
         }
     },
@@ -28,6 +28,7 @@ BlogPost.init({
 }, {
     sequelize: db,
     modelName: 'blogPost',
+    freezeTableName: true
     // timestamps: true
 });
 

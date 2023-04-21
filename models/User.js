@@ -1,13 +1,18 @@
 const { Model, DataTypes } = require('sequelize');
 const db = require('../config/connection');
 
-class User extends Model {}
+// require bcrypt
+
+class User extends Model {
+    // method for checking the password
+}
 
 User.init({
     username: {
         type: DataTypes.STRING(40),
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
     },
     password: {
         type: DataTypes.STRING,
@@ -17,8 +22,10 @@ User.init({
         }
     }
 }, {
+    //  hooks for beforeCreate and beforeUpdate
     sequelize: db,
     modelName: 'user',
+    freezeTableName: true
     // timestamps: true
 });
 

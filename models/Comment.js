@@ -7,7 +7,7 @@ Comment.init({
     blog_id : {
         type: DataTypes.INTEGER,
         references: {
-            model: 'blogPosts',
+            model: 'blogPost',
             key: 'id'
         }
     },
@@ -18,7 +18,7 @@ Comment.init({
     username: {
         type: DataTypes.STRING,
         references: {
-            model: 'users',
+            model: 'user',
             key: 'username'
         }
     },
@@ -31,6 +31,7 @@ Comment.init({
 }, {
     sequelize: db,
     modelName: 'comment',
+    freezeTableName: true
     // timestamps: true
 });
 

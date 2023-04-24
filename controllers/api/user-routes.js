@@ -42,7 +42,15 @@ router.get('/', async (req, res) => {
   // SESSIONS
   router.post('/', async (req, res) => {
     const results = await User.create(req.body)
-    res.json(results);
+
+    req.session.save(() => {
+      req.session.user_id = results.id;
+      req.session.logged_in = true;
+
+
+      res.json(results);
+    })
+
   });
 
 // logging in
@@ -51,9 +59,31 @@ router.get('/', async (req, res) => {
 // is the password matched with username
 // create the session -> tokens
 
-//   router.post("/login", async (req, res) => {
+  router.post("/login", async (req, res) => {
+    const results = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
 
-//   })
+    if(!results) {
+      res.status(400).json({message: "User not found!"})
+    }
+
+    if(req.body.password !== results.password) {
+      res.status(400).json({message: "Invalid username or password!"})
+    }
+
+    req.session.save(() => {
+      req.session.user_id = results.id;
+      req.session.logged_in = true;
+
+      console.log("Logged in!")
+
+      res.json(results);
+    })
+
+  })
   
   
   router.put('/:id', async (req,res) => {

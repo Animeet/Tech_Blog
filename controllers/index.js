@@ -1,31 +1,44 @@
 const router = require('express').Router();
 const apiRoutes = require('./api');
-const {BlogPost, User} = require("../models")
+const { BlogPost, User } = require("../models")
 
-router.get("/test", async (req, res) => {
-    const results = await BlogPost.findAll({
-        include: [
-          {
-            model: User,
-            attributes: [
-              "username"
-            ]
-          }
+router.get("/", async (req, res) => {
+  const results = await BlogPost.findAll({
+    include: [
+      {
+        model: User,
+        attributes: [
+          "username"
         ]
-      })
+      }
+    ]
+  })
 
-      
-      const data = results.map(post => post.get({plain: true}))
-      console.log(data)
+  const data = results.map(post => post.get({ plain: true }))
+  console.log(req.session.user_id)
+  if (req.session.user_id) {
+    const user = await User.findOne({
+      where: {
+        id: req.session.user_id
+      },
+      attributes: ['username']
+    });
 
-    res.render("landing", {
-        data,
-        username: "John"
-    })
+    return res.render('landing', {
+      data,
+      logged_in: true,
+      user
+    });
+  }
+
+  res.render("landing", {
+    data,
+  })
 })
 
+
 router.get("/signup", (req, res) => {
-    res.render("signup")
+  res.render("signup")
 })
 
 
@@ -37,7 +50,7 @@ router.get("/login", (req, res) => {
 router.use('/api', apiRoutes);
 
 function myMiddleware(req, res, next) {
-    res.send("<h1>Wrong Route!</h1>")
+  res.send("<h1>Wrong Route!</h1>")
 }
 
 router.use(myMiddleware);

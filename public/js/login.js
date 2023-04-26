@@ -18,7 +18,7 @@ document.querySelector("#login-form").addEventListener("submit", (event) => {
         })
     })
     .then(() => {
-        window.location.href = "/test"
+        window.location.href = "/"
     })
 
 })

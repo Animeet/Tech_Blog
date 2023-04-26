@@ -1,10 +1,12 @@
-<div class="card" style="width: 18rem;">
-    <div class="card-header">
-        {{title}}
+<div class="card m-5 d-flex" id="cardbord" style="width: 85rem;">
+    <div class="card-header d-flex justify-content-between" id="cardhead">
+        <p id="titlestyle">{{title}}</p>
+        <p id="userstyle">Posted By: {{username}}</p>
+
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{contents}}</li>
-        <li class="list-group-item">{{username}}</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-    </ul>
+    <div id="contentstyle">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-5">{{contents}}</li>
+        </ul>
+    </div>
 </div>

@@ -1,6 +1,7 @@
-<h1>THis is the landing page</h1>
 
+{{#if logged_in}}
 <h2>Hello, {{username}}</h2>
+{{/if}}
 
 {{#each data as |post| }}
     {{> blogPost post}}

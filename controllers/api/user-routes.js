@@ -72,17 +72,14 @@ router.post("/login", async (req, res) => {
   console.log(results)
   if (!results) {
     res.status(400).json({ message: "User not found!" })
+    return;
   }
 
-  const foundUser = results.get({
-    plain: true
-  })
-
-  if (req.body.password !== foundUser.password) {
+  if (req.body.password !== results.password) {
     res.status(400).json({ message: "Invalid username or password!" })
+    return;
   }
-  console.log(foundUser)
-  req.session.username = foundUser.username;
+  console.log(results)
 
   req.session.save(() => {
     req.session.username = results.username;
@@ -92,7 +89,6 @@ router.post("/login", async (req, res) => {
 
     res.json(results);
   })
-
 })
 
 

@@ -14,11 +14,17 @@ document.querySelector("#login-form").addEventListener("submit", (event) => {
         },
         body: JSON.stringify({
             "password": password,
-	        "username": username
+            "username": username
         })
     })
-    .then(() => {
-        window.location.href = "/"
+    .then(res => res.json())
+    .then((data) => {
+        console.log(data)
+        if(data.username) {
+            window.location.href = "/"
+        } else {
+            alert("Something wrong happened!")
+        }
     })
 
 })

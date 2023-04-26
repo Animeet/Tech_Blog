@@ -9,6 +9,8 @@
 
 **Heroku Deployed URL:** https://evening-shelf-47223.herokuapp.com/
 
+  ![Tech Blog Screenshot](./public/images/TheTechBlog.png)
+
   ## Table of Contents
   - [Installation](#installation)
   - [Usage](#usage)

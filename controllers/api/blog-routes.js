@@ -35,8 +35,16 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-  const results = await BlogPost.create(req.body)
-  res.json(results);
+  if(req.session.logged_in) {
+    const results = await BlogPost.create({
+      title: req.body.title,
+      contents: req.body.contents,
+      username: req.session.username
+    })
+    res.json(results);
+  } else {
+    res.status(401).send("Not logged in!")
+  }
 });
 
 

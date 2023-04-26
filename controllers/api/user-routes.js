@@ -21,8 +21,16 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/:id', async (req, res) => {
-  const results = await User.findByPk(req.params.id, {
+router.get('/logout', async(req, res) => {
+  req.session.destroy(() => {
+    console.log('error logout')
+    res.redirect('/')
+  })
+})
+
+
+router.get('/:username', async (req, res) => {
+  const results = await User.findByPk(req.params.username, {
     include: [
       {
         model: BlogPost,
@@ -44,7 +52,7 @@ router.post('/', async (req, res) => {
   const results = await User.create(req.body)
 
   req.session.save(() => {
-    req.session.user_id = results.id;
+    req.session.username = results.username;
     req.session.logged_in = true;
 
 
@@ -66,21 +74,24 @@ router.post("/login", async (req, res) => {
     res.status(400).json({ message: "User not found!" })
   }
 
-  if (req.body.password !== results.password) {
+  const foundUser = results.get({
+    plain: true
+  })
+
+  if (req.body.password !== foundUser.password) {
     res.status(400).json({ message: "Invalid username or password!" })
   }
-  console.log(results.id)
-  req.session.user_id = results.id;
+  console.log(foundUser)
+  req.session.username = foundUser.username;
 
+  req.session.save(() => {
+    req.session.username = results.username;
+    req.session.logged_in = true;
 
-  // req.session.save(() => {
-  //   req.session.user_id = results.id;
-  //   req.session.logged_in = true;
+    console.log("Logged in!")
 
-  //   console.log("Logged in!")
-
-  //   res.json(results);
-  // })
+    res.json(results);
+  })
 
 })
 
@@ -97,7 +108,6 @@ router.post("/signup", async (req, res) => {
     const user = await User.create(formData);
     console.log(user)
     req.session.save(() => {
-        req.session.user_id = user.id;
         req.session.username = user.username;
         req.session.logged_in = true;
         res.redirect('/')
@@ -107,6 +117,7 @@ router.post("/signup", async (req, res) => {
     res.redirect('/')
 }
 })
+
 
 
 router.put('/:id', async (req, res) => {

@@ -1,7 +1,7 @@
 <div class="card m-5 d-flex" id="cardbord" style="width: 85rem;">
     <div class="card-header d-flex justify-content-between" id="cardhead">
-        <a href="/post/{{id}}"><p id="titlestyle">{{title}}</p></a>
-        <p id="userstyle">Posted By: {{username}}</p>
+        <p id="titlestyle">{{title}}</p>
+        <p id="userstyle">Posted By: {{username}} {{created_on}}</p>
 
     </div>
     <div id="contentstyle">
@@ -10,3 +10,11 @@
         </ul>
     </div>
 </div>
+
+{{#each comments}}
+<div>
+    {{username}}
+    {{contents}}
+    {{created_on}}
+</div>
+{{/each}}

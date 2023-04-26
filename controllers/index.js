@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const apiRoutes = require('./api');
-const { BlogPost, User } = require("../models")
+const { BlogPost, User, Comment } = require("../models")
 
 router.get("/", async (req, res) => {
   const results = await BlogPost.findAll({
@@ -16,10 +16,10 @@ router.get("/", async (req, res) => {
 
   const data = results.map(post => post.get({ plain: true }))
   console.log(req.session.user_id)
-  if (req.session.user_id) {
+  if (req.session.username) {
     const user = await User.findOne({
       where: {
-        id: req.session.user_id
+        username: req.session.username
       },
       attributes: ['username']
     });
@@ -34,6 +34,25 @@ router.get("/", async (req, res) => {
   res.render("landing", {
     data,
   })
+})
+
+
+router.get('/post/:id', async (req, res) => {
+  const results = await BlogPost.findByPk(req.params.id, {
+    include: Comment
+  })
+  const post = results.get({
+    plain: true
+  })
+  console.log(post)
+
+  res.render('post', {
+    ...post
+  })
+})
+
+router.get("/newpost", (req, res) => {
+  res.render('newpost')
 })
 
 

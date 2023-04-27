@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 
     return res.render('landing', {
       data,
-      logged_in: true,
+      logged_in: req.session.logged_in,
       user
     });
   }
@@ -44,11 +44,12 @@ router.get('/post/:id', async (req, res) => {
   const post = results.get({
     plain: true
   })
-  console.log(post)
 
-  res.render('post', {
+  return res.render('blogpost', {
+    logged_in: req.session.logged_in,
+
     ...post
-  })
+  });
 })
 
 router.get("/newpost", (req, res) => {

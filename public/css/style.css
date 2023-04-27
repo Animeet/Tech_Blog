@@ -72,3 +72,7 @@
     color: rgb(230, 228, 244);
     background-color: rgb(102, 102, 102);
 }
+
+.blogidhide {
+    display: none;
+}

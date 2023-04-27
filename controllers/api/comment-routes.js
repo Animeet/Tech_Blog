@@ -34,7 +34,14 @@ router.get('/', async (req, res) => {
   
   
   router.post('/', async (req, res) => {
-    const results = await Comment.create(req.body)
+    console.log('Posting')
+    console.log(req.body)
+    const results = await Comment.create({
+      contents: req.body.content,
+      username: req.session.username,
+      blog_id: req.body.blogPostId
+    })
+
     res.json(results);
   });
   

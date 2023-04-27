@@ -1,0 +1,39 @@
+<div class="card m-5 d-flex" id="cardbord" style="width: 85rem;">
+    <div class="card-header d-flex justify-content-between" id="cardhead">
+        <p id="titlestyle">{{title}}</p>
+        <p id="userstyle">Posted By: {{username}} {{created_on}}</p>
+
+    </div>
+    <div id="contentstyle">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-5">{{contents}}</li>
+        </ul>
+    </div>
+</div>
+
+
+{{#each comments}}
+
+<div class="card m-5 d-flex col-6" id="cardbord" style="width: 85rem;">
+    <div id="contentstyle">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">{{contents}}</li>
+        </ul>
+    </div>
+    <div class="d-flex justify-content-center" id="cardhead">
+        <p id="userstyle">Posted By: {{username}} {{created_on}}</p>
+    </div>
+</div>
+{{/each}}
+
+
+{{#if logged_in}}
+<form class="m-5 d-flex flex-column col-5" id="commentform">
+    <label>Add a new comment</label>
+    <input class="form-control mb-3" type="text" id="commentinput" />
+    <input class="blogidhide" value={{id}} type="text" id="blogpostid">
+    <button type="submit">Post Comment</button>
+</form>
+{{/if}}
+
+<script src="/js/blogpost.js"></script>
